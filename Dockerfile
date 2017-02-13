@@ -60,6 +60,7 @@ RUN	sed -i 's/universe/universe multiverse/' /etc/apt/sources.list	;\
 		libnet-tftp-perl					\
 		libredis-perl						\
 		libswitch-perl						\
+		openssh-server						\
 		libwww-perl							\
 		libjson-perl					&&	\
 		apt-get clean
@@ -186,7 +187,7 @@ RUN ln -s /etc/sv/* /etc/service
 
 ENV APACHE_LOCK_DIR /var/run
 ENV APACHE_LOG_DIR /var/log/apache2
-
+RUN echo "root:Local100@" | chpasswd
 #Set ServerName for Apache
 RUN echo "ServerName nagiosdocker" > /etc/apache2/conf-available/servername.conf	&& \
     ln -s /etc/apache2/conf-available/servername.conf /etc/apache2/conf-enabled/servername.conf
