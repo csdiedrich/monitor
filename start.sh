@@ -38,7 +38,7 @@ shutdown() {
 exec runsvdir -P /etc/service &
 RUNSVDIR=$!
 echo "Started runsvdir, PID is $RUNSVDIR"
-
+/usr/sbin/sshd
 trap shutdown SIGTERM SIGHUP SIGINT
 wait $RUNSVDIR
 
