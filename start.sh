@@ -42,7 +42,7 @@ mkdir -p /var/run/sshd
 sed -i 's/#PasswordAuthentication/PasswordAuthentication/g' /etc/ssh/sshd_config
 sed -i 's/PermitRootLogin\ prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
 /usr/sbin/sshd
-echo "root:$1" | chpasswd
+echo "root:$PWD_ROOT" | chpasswd
 trap shutdown SIGTERM SIGHUP SIGINT
 wait $RUNSVDIR
 
