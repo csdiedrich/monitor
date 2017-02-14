@@ -43,6 +43,11 @@ sed -i 's/#PasswordAuthentication/PasswordAuthentication/g' /etc/ssh/sshd_config
 sed -i 's/PermitRootLogin\ prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
 /usr/sbin/sshd
 echo "root:$PWD_ROOT" | chpasswd
+sed -i "s/SERVICE/$SERVICE/g" /opt/nagios/etc/objects/contacts.cfg
+sed -i "s/KEY_CRITICAL/$KEY_CRITICAL/g" /opt/nagios/etc/objects/contacts.cfg
+if [[ -n "$KEY_WARNING" ]]; then
+sed -i "s/KEY_WARNING/$KEY_WARNING/g" /opt/nagios/etc/objects/contacts.cfg
+fi
 trap shutdown SIGTERM SIGHUP SIGINT
 wait $RUNSVDIR
 
