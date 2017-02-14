@@ -174,13 +174,16 @@ ADD nagios/localhost.cfg /opt/nagios/etc/objects/localhost.cfg
 
 RUN mkdir -p /orig/var && mkdir -p /orig/etc				&&	\
 	cp -Rp /opt/nagios/var/* /orig/var/					&&	\
-	cp -Rp /opt/nagios/etc/* /orig/etc/
+	cp -Rp /opt/nagios/etc/* /orig/etc/					&&	\
+	mkdir /root/scripts
 
 ADD nagios.init /etc/sv/nagios/run
 ADD apache.init /etc/sv/apache/run
 ADD postfix.init /etc/sv/postfix/run
 ADD start.sh /usr/local/bin/start_nagios
 RUN chmod +x /usr/local/bin/start_nagios
+ADD reload.sh /root/scripts/reload.sh
+RUN chmod +x /root/scripts/reload.sh
 
 # enable all runit services
 RUN ln -s /etc/sv/* /etc/service
