@@ -61,7 +61,8 @@ RUN	sed -i 's/universe/universe multiverse/' /etc/apt/sources.list	;\
 		libredis-perl						\
 		libswitch-perl						\
 		openssh-server						\
-		libwww-perl							\
+		libwww-perl						\
+		apt-transport-https					\
 		libjson-perl					&&	\
 		apt-get clean
 
