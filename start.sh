@@ -34,7 +34,11 @@ shutdown() {
   SHELL=/bin/bash parallel --no-notice 'timeout 5 /bin/bash -c "kill {} && wait {}" || kill -9 {}' ::: $ORPHANS 2> /dev/null
   exit
 }
-
+/bin/mkdir -p /var/run/pdagent
+python /usr/share/pdagent/bin/pdagentd.py
+sed -i "s/SERVICE/$SERVICE/g" /opt/nagios/etc/objects/contacts.cfg
+sed -i "s/KEY_CRITICAL/$KEY_CRITICAL/g" /opt/nagios/etc/objects/contacts.cfg
+sed -i "s/KEY_WARNING/$KEY_WARNING/g" /opt/nagios/etc/objects/contacts.cfg
 exec runsvdir -P /etc/service &
 RUNSVDIR=$!
 echo "Started runsvdir, PID is $RUNSVDIR"
@@ -43,9 +47,6 @@ sed -i 's/#PasswordAuthentication/PasswordAuthentication/g' /etc/ssh/sshd_config
 sed -i 's/PermitRootLogin\ prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
 /usr/sbin/sshd
 echo "root:$PWD_ROOT" | chpasswd
-sed -i "s/SERVICE/$SERVICE/g" /opt/nagios/etc/objects/contacts.cfg
-sed -i "s/KEY_CRITICAL/$KEY_CRITICAL/g" /opt/nagios/etc/objects/contacts.cfg
-sed -i "s/KEY_WARNING/$KEY_WARNING/g" /opt/nagios/etc/objects/contacts.cfg
 trap shutdown SIGTERM SIGHUP SIGINT
 wait $RUNSVDIR
 
