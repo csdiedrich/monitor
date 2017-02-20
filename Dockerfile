@@ -17,7 +17,8 @@ ENV NG_CGI_DIR			${NAGIOS_HOME}/sbin
 ENV NG_WWW_DIR			${NAGIOS_HOME}/share/nagiosgraph
 ENV NG_CGI_URL			/cgi-bin
 
-
+RUN wget -O - https://packages.pagerduty.com/GPG-KEY-pagerduty | apt-key add -
+RUN sh -c 'echo "deb https://packages.pagerduty.com/pdagent deb/" >/etc/apt/sources.list.d/pdagent.list'
 RUN	sed -i 's/universe/universe multiverse/' /etc/apt/sources.list	;\
 	apt-get update && apt-get install -y				\
 		iputils-ping						\
@@ -63,6 +64,8 @@ RUN	sed -i 's/universe/universe multiverse/' /etc/apt/sources.list	;\
 		openssh-server						\
 		libwww-perl						\
 		apt-transport-https					\
+		pdagent							\
+		pdagent-integrations					\
 		libjson-perl					&&	\
 		apt-get clean
 
@@ -161,6 +164,7 @@ ADD nagios/templates.cfg /opt/nagios/etc/objects/templates.cfg
 ADD nagios/commands.cfg /opt/nagios/etc/objects/commands.cfg
 ADD nagios/localhost.cfg /opt/nagios/etc/objects/localhost.cfg
 ADD nagios/contacts.cfg /opt/nagios/etc/objects/contacts.cfg
+ADD nagios/pdagentd.py	/usr/share/pdagent/bin/pdagentd.py
 
 # Copy example config in-case the user has started with empty var or etc
 
