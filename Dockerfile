@@ -1,5 +1,4 @@
 FROM ubuntu:16.04
-MAINTAINER Jason Rivers <jason@jasonrivers.co.uk>
 
 ENV NAGIOS_HOME			/opt/nagios
 ENV NAGIOS_USER			nagios
@@ -65,13 +64,6 @@ RUN	sed -i 's/universe/universe multiverse/' /etc/apt/sources.list	;\
 		apt-transport-https					\
 		wget							\
 		libjson-perl					&&	\
-		apt-get clean
-
-RUN 	wget -O - https://packages.pagerduty.com/GPG-KEY-pagerduty | apt-key add -; \
-		sh -c 'echo "deb https://packages.pagerduty.com/pdagent deb/" >/etc/apt/sources.list.d/pdagent.list';\
-		apt-get update && apt-get install -y				\
-		pdagent							\
-		pdagent-integrations					&&	\
 		apt-get clean
 
 RUN	( egrep -i "^${NAGIOS_GROUP}"    /etc/group || groupadd $NAGIOS_GROUP    )				&&	\
