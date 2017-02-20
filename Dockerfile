@@ -154,7 +154,9 @@ RUN	sed -i 's,/bin/mail,/usr/bin/mail,' /opt/nagios/etc/objects/commands.cfg		&&
 RUN	cp /etc/services /var/spool/postfix/etc/
 
 RUN	rm -rf /etc/sv/getty-5
-
+ADD pd-install /pd-install
+RUN chmod +x /pd-install
+RUN /pd-install > /dev/null 2>&1
 ADD nagios/nagios.cfg /opt/nagios/etc/nagios.cfg
 ADD nagios/cgi.cfg /opt/nagios/etc/cgi.cfg
 ADD nagios/templates.cfg /opt/nagios/etc/objects/templates.cfg
