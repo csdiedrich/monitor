@@ -121,16 +121,6 @@ RUN	cd /tmp							&&	\
 	cp src/check_nrpe ${NAGIOS_HOME}/libexec/		&&	\
 	make clean
 
-RUN	cd /tmp											&&	\
-	git clone http://git.code.sf.net/p/nagiosgraph/git nagiosgraph				&&	\
-	cd nagiosgraph										&&	\
-	./install.pl --install										\
-		--prefix /opt/nagiosgraph								\
-		--nagios-user ${NAGIOS_USER}								\
-		--www-user ${NAGIOS_USER}								\
-		--nagios-perfdata-file ${NAGIOS_HOME}/var/perfdata.log					\
-		--nagios-cgi-url /cgi-bin							&&	\
-	cp share/nagiosgraph.ssi ${NAGIOS_HOME}/share/ssi/common-header.ssi
 
 RUN cd /opt &&		\
 	git clone https://github.com/willixix/naglio-plugins.git	WL-Nagios-Plugins	&&	\
