@@ -160,7 +160,7 @@ ADD nagios/cgi.cfg /opt/nagios/etc/cgi.cfg
 ADD nagios/templates.cfg /opt/nagios/etc/objects/templates.cfg
 ADD nagios/commands.cfg /opt/nagios/etc/objects/commands.cfg
 ADD nagios/localhost.cfg /opt/nagios/etc/objects/localhost.cfg
-ADD nagios/contacts.cfg /opt/nagios/etc/objetcts/contacts.cfg
+ADD nagios/contacts.cfg /opt/nagios/etc/objects/contacts.cfg
 
 # Copy example config in-case the user has started with empty var or etc
 
