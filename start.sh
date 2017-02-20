@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# adapted from https://github.com/discourse/discourse_docker/blob/master/image/base/boot
-# this script becomes PID 1 inside the container, catches termination signals, and stops
-# processes managed by runit
-
 if [ -z "$(ls -A /opt/nagios/etc)" ]; then
     echo "Started with emty ETC, copying example data in-place"
     cp -Rp /orig/etc/* /opt/nagios/etc/
